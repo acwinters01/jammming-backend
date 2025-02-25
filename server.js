@@ -32,11 +32,13 @@ app.get("/api/login", (req, res) => {
 
 // 🌟 New Endpoint: Securely Send Client ID and Redirect URI to Frontend
 app.get('/api/spotify-auth', (req, res) => {
-    console.log("Sending Spotify Credentials: ", process.env.SPOTIFY_CLIENT_ID, process.env.SPOTIFY_REDIRECT_URI);
+    console.log("🔍 Checking environment variables...");
+    console.log("SPOTIFY_CLIENT_ID:", process.env.SPOTIFY_CLIENT_ID || "❌ MISSING CLIENT ID");
+    console.log("SPOTIFY_REDIRECT_URI:", process.env.SPOTIFY_REDIRECT_URI || "❌ MISSING REDIRECT URI");
 
     res.json({
-        clientId: process.env.SPOTIFY_CLIENT_ID,
-        redirectUri: process.env.REDIRECT_URI, // Make sure this is defined in .env
+        clientId: process.env.SPOTIFY_CLIENT_ID || "MISSING_CLIENT_ID",
+        redirectUri: process.env.SPOTIFY_REDIRECT_URI || "MISSING_REDIRECT_URI"
     });
 });
 
