@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5005;
 
 // Allow requests from frontend
 app.use(cors({
-    origin: "https://spotify-auth-server-j4na.onrender.com", // Allow frontend origin (change in production)
+    origin: "https://acwinters01.github.io",  // Allow frontend origin
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true
 }));
