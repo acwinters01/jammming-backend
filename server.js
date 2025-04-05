@@ -15,7 +15,7 @@ app.use(cors({
 
 app.use(express.json());
 
-console.log(`🚀 Running in ${process.env.NODE_ENV || 'development'} mode`);
+console.log(`Running in ${process.env.NODE_ENV || 'development'} mode`);
 
 app.get("/api/login", (req, res) => {
     const authURL = new URL("https://accounts.spotify.com/authorize");
@@ -32,13 +32,14 @@ app.get("/api/login", (req, res) => {
 
 // 🌟 New Endpoint: Securely Send Client ID and Redirect URI to Frontend
 app.get('/api/spotify-auth', (req, res) => {
-    console.log("🔍 Checking environment variables...");
-    console.log("SPOTIFY_CLIENT_ID:", process.env.SPOTIFY_CLIENT_ID || "❌ MISSING CLIENT ID");
-    console.log("SPOTIFY_REDIRECT_URI:", process.env.SPOTIFY_REDIRECT_URI || "❌ MISSING REDIRECT URI");
+    // DEBUGGING
+    // console.log("...checking environment variables...");
+    // console.log("SPOTIFY_CLIENT_ID:", process.env.SPOTIFY_CLIENT_ID || "ERROR MISSING CLIENT ID");
+    // console.log("SPOTIFY_REDIRECT_URI:", process.env.SPOTIFY_REDIRECT_URI || "ERROR: MISSING REDIRECT URI");
 
     res.json({
-        clientId: process.env.SPOTIFY_CLIENT_ID || "MISSING_CLIENT_ID",
-        redirectUri: process.env.SPOTIFY_REDIRECT_URI || "MISSING_REDIRECT_URI"
+        clientId: process.env.SPOTIFY_CLIENT_ID || "ERROR: MISSING CLIENT ID",
+        redirectUri: process.env.SPOTIFY_REDIRECT_URI || "ERROR: MISSING REDIRECT URI"
     });
 });
 
@@ -95,21 +96,21 @@ app.post("/api/refresh-token", async (req, res) => {
 
 // Start Server
 const server = app.listen(PORT, () => {
-    console.log(`✅ Backend running on http://localhost:${PORT}`);
+    console.log(`Backend running on http://localhost:${PORT}`);
 });
 
 // Handle Process Exit Events Gracefully
 const shutdown = (signal) => {
     console.log(`\nReceived ${signal}. Closing server...`);
     server.close(() => {
-        console.log("🛑 Server closed. Exiting process.");
+        console.log("Server closed. Exiting process.");
         process.exit(0);
     });
 };
 
 // Handle crashes and termination signals
 process.on('uncaughtException', (err) => {
-    console.error("🔥 Uncaught Exception:", err);
+    console.error("Uncaught Exception:", err);
     process.exit(1);
 });
 
