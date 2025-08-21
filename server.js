@@ -3,11 +3,22 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const app = express();
-const PORT = process.env.PORT || 5005;
 
 // Allow requests from frontend
+const allowedOrigins = [
+    process.env.PORTFOLIO_URL,     // prod
+    process.env.FRONTEND_URL,      // dev (CRA)
+    process.env.VITE_URL,           // dev (Vite) 
+];
+
 app.use(cors({
-    origin: "https://acwinters01.github.io",  // Allow frontend origin
+    origin: function ( origin, callback ) {
+        if(!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    },
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true
 }));
@@ -30,20 +41,15 @@ app.get("/api/login", (req, res) => {
     res.redirect(authURL.toString());
 });
 
-// 🌟 New Endpoint: Securely Send Client ID and Redirect URI to Frontend
+// New Endpoint: Send Client ID and Redirect URI to Frontend
 app.get('/api/spotify-auth', (req, res) => {
-    // DEBUGGING
-    // console.log("...checking environment variables...");
-    // console.log("SPOTIFY_CLIENT_ID:", process.env.SPOTIFY_CLIENT_ID || "ERROR MISSING CLIENT ID");
-    // console.log("SPOTIFY_REDIRECT_URI:", process.env.SPOTIFY_REDIRECT_URI || "ERROR: MISSING REDIRECT URI");
-
     res.json({
         clientId: process.env.SPOTIFY_CLIENT_ID || "ERROR: MISSING CLIENT ID",
         redirectUri: process.env.SPOTIFY_REDIRECT_URI || "ERROR: MISSING REDIRECT URI"
     });
 });
 
-// 🌟 Request Spotify Auth Token (Client Credentials Flow)
+// Request Spotify Auth Token
 app.post('/api/token', async (req, res) => {
     const { code } = req.body;
 

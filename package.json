@@ -1,7 +1,7 @@
 {
   "name": "spotify-backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "main.jsx",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js"
