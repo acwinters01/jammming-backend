@@ -10,9 +10,9 @@ app.use(express.json());
 
 // Allow requests from frontend
 const allowedOrigins = [
-    process.env.PORTFOLIO_URL,     // prod
-    process.env.FRONTEND_URL,      // dev (CRA)
-    process.env.VITE_URL,           // dev (Vite) 
+    process.env.PORTFOLIO_URL,          // GH PAGES 
+    process.env.LOCAL_FRONTEND_URL,     // LOCAL DEV ALT PORT
+    process.env.LOCAL_VITE_URL,         // LOCAL DEV VITE
 ];
 
 app.use(cors({
@@ -32,7 +32,7 @@ console.log(`Running in ${process.env.NODE_ENV || 'development'} mode`);
 
 app.get('/', (req, res) => {
     res.send('Jammming Server is running....')
-})
+});
 
 app.get("/api/login", (req, res) => {
     const authURL = new URL("https://accounts.spotify.com/authorize");
