@@ -1,8 +1,12 @@
 require('dotenv').config();
 const express = require('express');
+const compression = require('compression');
 const cors = require('cors');
 const axios = require('axios');
 const app = express();
+app.use(compression());
+app.use(express.json());
+
 
 // Allow requests from frontend
 const allowedOrigins = [
@@ -23,10 +27,12 @@ app.use(cors({
     credentials: true
 }));
 
-
-app.use(express.json());
-
 console.log(`Running in ${process.env.NODE_ENV || 'development'} mode`);
+
+
+app.get('/', (req, res) => {
+    res.send('Jammming Server is running....')
+})
 
 app.get("/api/login", (req, res) => {
     const authURL = new URL("https://accounts.spotify.com/authorize");
@@ -101,8 +107,9 @@ app.post("/api/refresh-token", async (req, res) => {
 
 
 // Start Server
-const server = app.listen(PORT, () => {
-    console.log(`Backend running on http://localhost:${PORT}`);
+const port = process.env.PORT || 4000;
+const server = app.listen(port, () => {
+    console.log(`Backend running on http://localhost:${port}`);
 });
 
 // Handle Process Exit Events Gracefully
