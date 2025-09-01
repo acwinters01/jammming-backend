@@ -55,32 +55,6 @@ app.get('/api/spotify-auth', (req, res) => {
     });
 });
 
-// Request Spotify Auth Token
-app.post('/api/token', async (req, res) => {
-    const { code } = req.body;
-
-    if (!code) {
-        return res.status(400).json({ error: "Missing authorization code" });
-    }
-
-    try {
-        const response = await axios.post("https://accounts.spotify.com/api/token", new URLSearchParams({
-            grant_type: "authorization_code",
-            code: code,
-            redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
-            client_id: process.env.SPOTIFY_CLIENT_ID,
-            client_secret: process.env.SPOTIFY_CLIENT_SECRET
-        }).toString(), {
-            headers: { "Content-Type": "application/x-www-form-urlencoded" }
-        });
-
-        res.json(response.data);
-    } catch (error) {
-        console.error('Error fetching token:', error.response?.data || error.message);
-        res.status(500).json({ error: 'Failed to retrieve token' });
-    }
-});
-
 app.post("/api/refresh-token", async (req, res) => {
     const { refresh_token } = req.body;
 
