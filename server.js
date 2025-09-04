@@ -10,9 +10,11 @@ app.use(express.json());
 
 // Allow requests from frontend
 const allowedOrigins = [
+    // Production
     process.env.PORTFOLIO_URL,          // GH PAGES 
-    process.env.LOCAL_FRONTEND_URL,     // LOCAL DEV ALT PORT
-    process.env.LOCAL_VITE_URL,         // LOCAL DEV VITE
+    // Development
+    // process.env.LOCAL_FRONTEND_URL,     // LOCAL DEV ALT PORT
+    // process.env.LOCAL_VITE_URL,         // LOCAL DEV VITE
 ];
 
 app.use(cors({

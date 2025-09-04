@@ -18,6 +18,7 @@ It handles Spotify API authentication, playlist creation, and communication betw
 - Spotify Web API
 - CORS
 - dotenv (environment variable management)
+- Render (deployment)
 
   
 
@@ -37,12 +38,12 @@ npm install
 3. Configure Environment Variables
 Create a .env file in the backend root:
 ```bash
-PORT=5005
+PORT=4000
 SPOTIFY_CLIENT_ID=your_client_id
 SPOTIFY_CLIENT_ID=your_client_secret
-SPOTIFY_REDIRECT_URI=http://localhost:5005/
-FRONTEND_URL=http://localhost:3000/
-VITE_URL=http://localhost:5173/
+SPOTIFY_REDIRECT_URI=http://localhost:3000/ 
+FRONTEND_URL=http://localhost:4173/         # Vite preview after build
+VITE_URL=http://localhost:5173/             # development
 ```
 Note:
 For production set FRONTEND_URL to your deployed frontend URL (e.g., https://acwinters01.github.io).
@@ -55,5 +56,6 @@ npm run dev
   
 The backend will be running at:
 ```bash
-http://localhost:4000
+http://localhost:4000         # development
 ```
+or use the link from the backend deployment (e.g., https://example-auth-server-j4na.onrender.com)
