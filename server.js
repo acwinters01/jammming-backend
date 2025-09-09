@@ -36,6 +36,10 @@ app.get('/', (req, res) => {
     res.send('Jammming Server is running....')
 });
 
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
 app.get("/api/login", (req, res) => {
     const authURL = new URL("https://accounts.spotify.com/authorize");
     const params = new URLSearchParams({
